@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   logout(): void {
     this.authService.logout().subscribe({
       next: res => {
@@ -30,5 +31,4 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-
 }
