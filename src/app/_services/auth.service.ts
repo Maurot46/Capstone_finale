@@ -24,8 +24,11 @@ export class AuthService {
       httpOptions
     );
   }
-  checkUsernameAvailability(username: string): Observable<{ available: boolean }> {
-    return this.http.get<{ available: boolean }>(AUTH_API+`users/existsByUsername?username=${username}`);
+  checkUsernameAvailability(username: string): Observable<{ exists: boolean }> {
+    return this.http.get<{ exists: boolean }>(AUTH_API+`users/existsByUsername?username=${username}`);
+  }
+  checkEmailAvailability(email: string): Observable<{ exists: boolean }> {
+    return this.http.get<{ exists: boolean }>(AUTH_API+`users/existsByEmail?email=${email}`);
   }
 
   register(username: string, email: string, password: string, name: string, surname: string, address: string): Observable<any> {

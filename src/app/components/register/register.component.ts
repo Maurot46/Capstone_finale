@@ -18,16 +18,23 @@ export class RegisterComponent implements OnInit {
     address: null
   };
   isSuccessful = false;
+  isUsernameAvailable: boolean = false;
+  isEmailAvailable: boolean = false;
   isSignUpFailed = false;
   errorMessage = '';
-  isUsernameAvailable = false;
   formSubmitted = false;
-  usernameErrorMessage!: string;
+  usernameErrorMessage!: string | null;
+  emailErrorMessage!: string | null;
+  token: string|undefined;
 
-  constructor(private authService : AuthService, private httpClient: HttpClient) { }
+
+  constructor(private authService : AuthService, private httpClient: HttpClient) {
+    this.token = undefined;
+  }
 
   ngOnInit(): void {
   }
+
   onUsernameBlur(): void {
     if (!this.form.username) {
       return;
@@ -35,14 +42,12 @@ export class RegisterComponent implements OnInit {
 
     this.authService.checkUsernameAvailability(this.form.username).subscribe({
       next: (result) => {
-        this.isUsernameAvailable = result.available;
+        this.isUsernameAvailable = !result.exists;
         if (!this.isUsernameAvailable) {
           this.usernameErrorMessage = 'This username is already taken.';
         } else {
-          this.usernameErrorMessage = '';
+          this.usernameErrorMessage = null;
         }
-        console.log('isUsernameAvailable:', this.isUsernameAvailable);
-        console.log('usernameErrorMessage:', this.usernameErrorMessage);
       },
       error: (err) => {
         console.log(err);
@@ -51,12 +56,30 @@ export class RegisterComponent implements OnInit {
   }
 
   onUsernameFocus(): void {
-    if (!this.isUsernameAvailable) {
-      // If the username is not available, set isUsernameAvailable to true
-      // to hide the error message when the input field gains focus again
-      this.isUsernameAvailable = true;
-      this.usernameErrorMessage = '';
+    this.usernameErrorMessage = null;
+  }
+  onEmailBlur(): void {
+    if (!this.form.email) {
+      return;
     }
+
+    this.authService.checkEmailAvailability(this.form.email).subscribe({
+      next: (result) => {
+        this.isEmailAvailable = !result.exists;
+        if (!this.isEmailAvailable) {
+          this.emailErrorMessage = 'This email is already used.';
+        } else {
+          this.emailErrorMessage = null;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  onEmailFocus(): void {
+    this.emailErrorMessage = null;
   }
 
   onSubmit(): void {
@@ -68,6 +91,7 @@ export class RegisterComponent implements OnInit {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        console.debug(`Token [${this.token}] generated`);
       },
       error: err => {
         this.errorMessage = err.error.message;
