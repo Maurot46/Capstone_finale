@@ -5,6 +5,9 @@
 export const environment = {
   production: false
 };
+recaptcha: {
+ siteKey: '6Ld6rwclAAAAAPiMsWi4_82NN-T0fmj_PMAH5B2Z'
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

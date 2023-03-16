@@ -24,14 +24,20 @@ export class AuthService {
       httpOptions
     );
   }
+  checkUsernameAvailability(username: string): Observable<{ available: boolean }> {
+    return this.http.get<{ available: boolean }>(AUTH_API+`users/existsByUsername?username=${username}`);
+  }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(username: string, email: string, password: string, name: string, surname: string, address: string): Observable<any> {
     return this.http.post(
       AUTH_API + 'signup',
       {
         username,
         email,
         password,
+        name,
+        surname,
+        address
       },
       httpOptions
     );
