@@ -1,0 +1,144 @@
+<h2>DASHBOARD</h2>
+<!--AGGIUNGI MENU-->
+<section class="ps-5">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title d-flex justify-content-center">AGGIUNGI MENU</h5>
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formAddMenu">
+          Aggiungi Menu <i class="bi bi-plus-circle"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="formAddMenu" tabindex="-1" aria-labelledby="formAddMenuLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="formAddMenuLabel">Add Menu</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="addMenu()">
+            <label>
+              Name
+              <input type="text" class="form-control" [(ngModel)]="menu.name" name="name">
+            </label>
+            <br>
+            <label class="pb-2">
+              Categoria
+              <select class="form-control" [(ngModel)]="menu.tipologia" name="tipologia" required>
+                <option [value]="null" disabled selected>-- Seleziona una categoria --</option>
+                <option value="mexican">Messicano</option>
+                <option value="italian">Italiano</option>
+                <option value="chinese">Cinese</option>
+                <option value="japanese">Giapponese</option>
+                <option value="indian">Indiano</option>
+                <option value="thai">Tailandese</option>
+                <option value="french">Francese</option>
+                <option value="american">Americano</option>
+                <!-- Add more options as needed -->
+              </select>
+            </label>
+            <br>
+            <button type="submit" class="btn btn-primary">Add Menu</button>
+            <div *ngIf="addMenuSuccess" class="text-success">{{ addMenuSuccess }}</div>
+            <div *ngIf="addMenuError" class="text-danger">{{ addMenuError }}</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <!--LISTA MENU-->
+  <div class="container">
+    <div class="row">
+      <div class="card col-md-4 mb-3 w-50">
+        <div class="card-body">
+          <h5 class="card-title d-flex justify-content-center">GESTISCI MENU</h5>
+        </div>
+        <ul>
+          <li *ngFor="let menu of menus">Nome:{{menu.id}} {{ menu.name }} | Categoria: {{ menu.tipologia }}
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formViewMenu"
+              (click)="menuItemSelected(menu)">V
+            </button>
+            <a class="btn btn-danger" (click)="deleteMenu(menu)">C</a>
+            <button *ngIf="menu" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formViewMenuItems"
+              (click)="loadMenuItems(menu)">M </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--MODAL VISUALIZZA-->
+  <div class="modal fade" id="formViewMenu" tabindex="-1" aria-labelledby="formAddProducts" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="formAddMenuLabel">AGGIUNGI PRODOTTI</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="menuItemForm" (ngSubmit)="addMenuItem()">
+            <label>
+              Name:
+              <input type="text" class="form-control" formControlName="name">
+            </label>
+            <br>
+            <div formArrayName="ingredients">
+              <label *ngFor="let ingredient of ingredients.controls; let i = index" class="pb-2">
+                Ingredient {{i + 1}}:
+                <input type="text" class="form-control" [formControlName]="i">
+              </label>
+            </div>
+            <button type="button" class="btn btn-secondary" (click)="addIngredient()">Add Ingredient</button>
+            <button type="button" class="btn btn-danger" (click)="removeIngredient(ingredients.length - 1)">Remove
+              Ingredient</button>
+            <br>
+            <label>
+              Price:
+              <input type="number" class="form-control" formControlName="price">
+            </label>
+            <br>
+            <button type="submit" class="btn btn-primary">Add Menu Item</button>
+            <div *ngIf="addMenuItemSuccess" class="text-success">{{ addMenuItemSuccess }}</div>
+            <div *ngIf="addMenuItemError" class="text-danger">{{ addMenuItemError }}</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="formViewMenuItems" tabindex="-1" aria-labelledby="formViewMenuItems" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="formAddMenuLabel">MODIFICA MENU</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li *ngFor="let item of menuItems">
+              <div *ngIf="!item.editing">
+                {{ item.name }}
+                <ul>
+                  <li *ngFor="let ingredient of item.ingredients">{{ ingredient }}</li>
+                </ul>
+                Prezzo: {{ item.price }}€
+                <button class="btn btn-primary" (click)="editMenuItem(item)">MODIFICA</button>
+              </div>
+              <div *ngIf="item.editing">
+                <label>Nome:</label> <input type="text" [(ngModel)]="item.name" /><br />
+                <label>Ingredienti:</label>
+                <input type="text" [(ngModel)]="ingredientsString" (ngModelChange)="updateIngredients(item, ingredientsString)" />
+                <label>Prezzo:</label> <input type="number" [(ngModel)]="item.price" /><br />
+                <button class="btn btn-primary" (click)="saveMenuItem(item)">SALVA</button>
+                <button class="btn btn-secondary" (click)="item.editing = false">ANNULLA</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -12,7 +12,12 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
+  private loggedIn = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient) {}
+
+  get isLoggedIn() {
+    return this.loggedIn;
+  }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(
@@ -22,6 +27,10 @@ export class AuthService {
         password,
       },
       httpOptions
+    ).pipe(
+      tap(() => {
+        this.loggedIn.next(true);
+      })
     );
   }
   checkUsernameAvailability(username: string): Observable<{ exists: boolean }> {
@@ -45,8 +54,29 @@ export class AuthService {
       httpOptions
     );
   }
+  registerRestaurateur(username: string, email: string, password: string, name: string, surname: string, address: string, phoneNumber: string, numeroPartitaIva: string, indirizzoRistorante: string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'signupRestaurateur',
+      {
+        username,
+        email,
+        password,
+        name,
+        surname,
+        address,
+        phoneNumber,
+        numeroPartitaIva,
+        indirizzoRistorante
+      },
+      httpOptions
+    );
+  }
 
   logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+    return this.http.post(AUTH_API + 'signout', { }, httpOptions).pipe(
+      tap(() => {
+        this.loggedIn.next(false);
+      })
+    );
   }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 const USER_KEY = 'auth-user';
+const CHART = 'cart'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,16 @@ export class StorageService {
   clean(): void {
     window.sessionStorage.clear();
   }
-
+  saveUsername(username: string): void {
+    window.sessionStorage.setItem('username', username);
+  }
+  public getToken(): string {
+    const user = this.getUser();
+    if (user && user.accessToken) {
+      return user.accessToken;
+    }
+    return '';
+  }
   public saveUser(user: any): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -33,5 +44,9 @@ export class StorageService {
     }
 
     return false;
+  }
+  getCart(): Observable<any[]> {
+    const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+    return of(Object.values(cart));
   }
 }

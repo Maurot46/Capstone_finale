@@ -1,0 +1,27 @@
+.btn.btn-tertiary {
+  color: #000000!important;
+  background: #ffffff!important;
+  border-color: #8105d8!important;
+  letter-spacing: 1.2px!important;
+}
+.btn.btn-tertiary:hover {
+  background-color: #6f42c1!important; /* Change to the desired darker purple color */
+  color: #000000!important;
+}
+.navbar {
+  background-color: transparent!important; /* Change to the desired dark color */
+}
+.nav-link{
+ font-size: 20px;
+}
+.nav-link.main{
+  font-size: 30px;
+ }
+.offcanvas{
+  background-color: #6f42c1!important;
+}
+.logo{
+  width: 150px;
+  height: auto;
+  margin-left: -50px;
+}

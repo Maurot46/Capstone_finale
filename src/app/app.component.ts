@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
 import { EventBusService } from './_shared/event-bus.service';
+import { Restaurateur } from './_services/restaurateur';
+import { RestaurateurService } from './_services/restaurateur.service';
 
 @Component({
   selector: 'app-root',
@@ -13,34 +15,44 @@ export class AppComponent {
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
-  showModeratorBoard = false;
+  showRestaurateurBoard = false;
   username?: string;
+  restaurateurs!: Restaurateur[];
   @Output() logoutEvent = new EventEmitter<void>();
-
   eventBusSub?: Subscription;
-
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private eventBusService: EventBusService
+    private eventBusService: EventBusService,
+    private restaurateurService: RestaurateurService
   ) {}
-
   ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
+    const token = this.storageService.getToken();
+  if (token) {
+    this.authService.isLoggedIn.next(true);
+    const user = this.storageService.getUser();
+    this.roles = user.roles;
+    this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+    this.showRestaurateurBoard = this.roles.includes('ROLE_RISTORATORE');
+    this.username = user.username;
+  }
 
-    if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
-      this.roles = user.roles;
+  this.authService.isLoggedIn.subscribe((loggedIn) => {
+    this.isLoggedIn = loggedIn;
+  });
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+  this.eventBusService.on('logout', () => {
+    this.logout();
+  });
 
-      this.username = user.username;
+  this.restaurateurService.getAllRestaurateurs().subscribe(
+    restaurateurs => {
+      this.restaurateurs = restaurateurs;
+    },
+    error => {
+      console.log(error);
     }
-
-    this.eventBusSub = this.eventBusService.on('logout', () => {
-      this.logout();
-    });
+  );
   }
 
   logout(): void {
@@ -56,5 +68,4 @@ export class AppComponent {
       }
     });
   }
-
 }

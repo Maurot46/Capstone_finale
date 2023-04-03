@@ -1,0 +1,64 @@
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item" *ngFor="let restaurateur of restaurateurs">
+    <h2 class="accordion-header">
+      <div class="row">
+        <div class="col-3">
+          <h2>{{ restaurateur.username }}</h2>
+        </div>
+        <div class="col-3">
+          <h2>Email: <a href = "mailto: {{ restaurateur.email }}">{{ restaurateur.email }}</a></h2>
+        </div>
+        <div class="col-3">
+          <h2>Numero di cellulare:<a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></h2>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+          <button class="btn collapsed" type="button" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapse-' + restaurateur.id"
+            [attr.aria-controls]="'collapse-' + restaurateur.id">APRI</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <h2>{{ restaurateur.phoneNumber }}</h2>
+        </div>
+        <div class="col-4">
+          <h2>Sede locale:{{ restaurateur.address }}</h2>
+        </div>
+        <div class="col-4">
+          <h2>N° P:IVA:{{ restaurateur.numeroPartitaIva }}</h2>
+        </div>
+      </div>
+    </h2>
+    <div [id]="'collapse-' + restaurateur.id" class="accordion-collapse collapse"
+      [attr.data-bs-parent]="'#accordionExample'">
+      <div class="accordion-body" *ngFor="let menu of restaurateur.menus">
+        Menu: {{ menu.name }}<button *ngIf="menu" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formViewMenuItems" (click)="loadMenuItems(menu)">Apri menu</button>
+      </div>
+    </div>
+    <div class="modal fade" id="formViewMenuItems" tabindex="-1" aria-labelledby="formViewMenuItems" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="formAddMenuLabel">MODIFICA MENU</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li *ngFor="let item of menuItems">
+                <div>
+                  {{ item.name }}
+                  <ul>Ingredienti:
+                    <li *ngFor="let ingredient of item.ingredients">{{ ingredient }}</li>
+                  </ul>
+                  Prezzo: {{ item.price }}€
+                  <input type="number" [(ngModel)]="item.quantity" min="1" max="10">
+                  <button (click)="addToCart(item, item.quantity)">Add to Cart</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
