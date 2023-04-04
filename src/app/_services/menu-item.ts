@@ -5,3 +5,4 @@ export interface MenuItem {
   ingredients: string;
   price: number;
 }
+

@@ -12,4 +12,5 @@ export class RestaurateurService {
   getAllRestaurateurs(): Observable<Restaurateur[]> {
     return this.http.get<Restaurateur[]>(`${this.baseUrl}/getAll`);
   }
+
 }
