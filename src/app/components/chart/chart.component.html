@@ -84,28 +84,13 @@
 
           <hr class="my-4">
 
-
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
+          <div *ngIf="!isLoggedIn">
+            <h4 class="mb-3">Payment</h4>
+            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+            <hr class="my-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit" (click)="confirmOrder()">Continue to checkout</button>
+            <div id="paypal-button-container" class="paypal-button-container"></div>
           </div>
-
-          <hr class="my-4">
-
-          <button *ngIf="!isLoggedIn" class="w-100 btn btn-primary btn-lg" type="submit" (click)="confirmOrder()">Continue to checkout</button>
-          <div id="paypal-button-container" class="paypal-button-container"></div>
           <div *ngIf="isLoggedIn" class="d-flex justify-content-center flex-column">
             <p class="d-flex justify-content-center">Esegui il login per continuare l'aquisto</p>
             <button class="btn btn-primary" routerLink="/login">Vai al login</button>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Order } from './order';
 
 @Injectable({
@@ -14,4 +14,10 @@ export class OrderService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
     return this.http.post<Order>(`${this.baseUrl}/create`, orderRequest,{headers});
   }
+  getAllOrdersByRestaurateurId(id:number): Observable<Order[]> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
+    return this.http.get<any>(`${this.baseUrl}/restaurateur/${id}`, {headers})
+      .pipe(map(response => response.content));
+  }
+
 }

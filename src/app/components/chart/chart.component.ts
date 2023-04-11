@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { Observable, map } from 'rxjs';
-import { ExtendedMenuItem } from 'src/app/_services/menu-item3';
 import { OrderService } from 'src/app/_services/order.service';
 import { StorageService } from 'src/app/_services/storage.service';
 
@@ -9,12 +9,16 @@ import { StorageService } from 'src/app/_services/storage.service';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit {
   @Input() isLoggedIn!: boolean;
   cartItems$: Observable<any[]> | undefined;
   cartItems: any[] = [];
   orderProcessing = false;
   user: any;
+  public payPalConfig?: IPayPalConfig;
+  showSuccess!: boolean;
+  showCancel!: boolean;
+  showError!: boolean;
 
   constructor(private storageService: StorageService, private orderService: OrderService) {
     this.user = JSON.parse(sessionStorage.getItem('auth-user') || '{}');
@@ -23,7 +27,7 @@ export class ChartComponent {
 
   ngOnInit(): void {
     this.cartItems$ = this.storageService.getCart();
-
+    this.initConfig();
   }
 
   getTotal(cartItems: any[]): number {
@@ -70,6 +74,69 @@ export class ChartComponent {
       }
     );
   }
+  private initConfig(): void {
+    const cartItemsJSON = sessionStorage.getItem('cart');
+    const cartItems: any[] = cartItemsJSON ? JSON.parse(cartItemsJSON) : [];
+    // Calculate cart total
+    const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    this.payPalConfig = {
+      currency: 'EUR',
+      clientId: 'Abnn9CDcHrKlUcdL31gq_4DUSQR435NbP840oOrC6uEUUAqnBmkp_MWa51r7k9VMwp5-CizUsYaoT-Y2',
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            currency_code: 'EUR',
+            value: cartTotal.toFixed(2),
+            breakdown: {
+              item_total: {
+                currency_code: 'EUR',
+                value: cartTotal.toFixed(2)
+              }
+            }
+          },
+          items: [{
+            name: 'Enterprise Subscription',
+            quantity: '1',
+            category: 'DIGITAL_GOODS',
+            unit_amount: {
+              currency_code: 'EUR',
+              value: cartTotal.toFixed(2),
+            },
+          }]
+        }]
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical'
+      },
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then((details: any) => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
 
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.showSuccess = true;
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+        this.showCancel = true;
+
+      },
+      onError: err => {
+        console.log('OnError', err);
+        this.showError = true;
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      }
+    };
+  }
 
 }

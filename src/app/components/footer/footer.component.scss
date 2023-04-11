@@ -1,0 +1,16 @@
+@media (max-width: 768px) {
+  .footer .nav {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer .row {
+    flex-wrap: wrap;
+  }
+  .footer .col-md-4 {
+    flex-basis: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+}

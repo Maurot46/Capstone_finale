@@ -1,13 +1,13 @@
 <section class="section-home">
 <div class="content1">
   <p class="d-flex justify-content-center pt-5 display-4 fw-bold text-white">Cosa vuoi ordinare?</p>
-  <form class="d-flex justify-content-center pt-5" role="search">
+  <form class="d-flex justify-content-center pt-5 px-2" role="search">
     <input class="form-control me-2" type="search" placeholder="Cerca ristorante" aria-label="Search">
     <button class="btn btn-light" type="submit">Search <i class="bi bi-search"></i></button>
   </form>
 </div>
 </section>
-<section class="pb-3">
+<section class="pb-3 mx-3">
   <div class="generale">
     <div class="row">
       <div class="col-sm-12 pt-2 pb-3">
@@ -15,51 +15,49 @@
       </div>
     </div>
     <div class="row pb-3">
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/indian-food.jpg" class="card-img-top card-home rounded-0" alt="Indian food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/indian-food.jpg" class="card-img-top card-home rounded-0 shadow-lg" alt="Indian food">
           <div class="card-body">
             <h3 class="card-title title-home">Indiano</h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/chinese-food.jfif" class="card-img-top card-home rounded-0" alt="Chinese food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/chinese-food.jfif" class="card-img-top card-home rounded-0 shadow-lg" alt="Chinese food">
           <div class="card-body">
             <h3 class="card-title title-home">Cinese</h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/japanese-food.jfif" class="card-img-top card-home rounded-0" alt="Japanese food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/japanese-food.jfif" class="img-fluid card-img-top card-home rounded-0 shadow-lg" alt="Japanese food">
           <div class="card-body">
             <h3 class="card-title title-home">Giapponese</h3>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row pb-3">
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/mexican-food.jfif" class="card-img-top card-home rounded-0" alt="Mexican food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/mexican-food.jfif" class="card-img-top card-home rounded-0 shadow-lg" alt="Mexican food">
           <div class="card-body">
             <h3 class="card-title title-home">Messicano</h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/italian-food.jfif" class="card-img-top card-home rounded-0" alt="Italian food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/italian-food.jfif" class="card-img-top card-home rounded-0 shadow-lg" alt="Italian food">
           <div class="card-body">
             <h3 class="card-title title-home">Italiano</h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 mb-3 mb-sm-0">
-        <div class="card border-0">
-          <img src="/assets/imgs/fast-food.jfif" class="card-img-top card-home rounded-0" alt="Fast food">
+      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+        <div class="card border-0 h-100">
+          <img src="/assets/imgs/fast-food.jfif" class="card-img-top card-home rounded-0 shadow-lg" alt="Fast food">
           <div class="card-body">
             <h3 class="card-title title-home">Fast Food</h3>
           </div>
@@ -68,6 +66,7 @@
     </div>
   </div>
 </section>
+
 <section class="bg-light">
   <div class="generale pt-4">
     <h2 class="display-3">Lavora con noi.</h2>
@@ -77,27 +76,10 @@
       <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">La nostra missione è trasformare il modo in cui le persone mangiano. È un obiettivo ambizioso, come noi, e ci servono persone che ci aiutino a raggiungerlo.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <button type="button" class="btn btn-success btn-lg px-4 gap-3">Collabora con noi</button>
+          <button type="button" class="btn custom-button btn-lg px-4 gap-3 text-white" routerLink="/registerRes">Collabora con noi</button>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section>
-  <div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0 text-body-secondary">&copy; 2023 DELIVER/YOU, Inc</p>
 
-      <a href="/home" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <img src="/assets/LOGO1-fotor-bg-remover-20230317191421.svg" alt="My Logo" class="logo" width="150px">
-      </a>
-
-      <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-      </ul>
-    </footer>
-  </div>
-</section>

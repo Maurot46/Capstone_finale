@@ -2,8 +2,9 @@ import { Component, OnInit} from '@angular/core';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Menu } from 'src/app/_services/menu';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MenuItem } from 'src/app/_services/menu-item';
 import { MenuItem2 } from 'src/app/_services/menu-item2';
+import { OrderService } from 'src/app/_services/order.service';
+import { Order } from 'src/app/_services/order';
 
 
 @Component({
@@ -22,9 +23,12 @@ export class RistoratoreBoardComponent implements OnInit{
   menuItems!: any[];
   selectedMenu!: Menu;
   ingredientsString: string = '';
+  orders!: any[];
+  p: number = 1;
   constructor(
     private menuService: MenuService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private orderService: OrderService
   ) {
     this.menuItemForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -38,12 +42,21 @@ export class RistoratoreBoardComponent implements OnInit{
   ngOnInit(): void {
     const userId = JSON.parse(sessionStorage.getItem('auth-user')!).id;
     this.getMenusByRestaurateurId(userId);
+    this.getOrdersByRestaurateurId(userId);
   }
 
   getMenusByRestaurateurId(id: number) {
     this.menuService.getMenuByRestaurateurId(id).subscribe(
       (menus: Menu[]) => {
         this.menus = menus;
+      },
+      (error) => console.log(error)
+    );
+  }
+  getOrdersByRestaurateurId(id: number) {
+    this.orderService.getAllOrdersByRestaurateurId(id).subscribe(
+      (orders: Order[]) => {
+        this.orders = orders;
       },
       (error) => console.log(error)
     );

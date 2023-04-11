@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CartService } from 'src/app/_services/cart.service';
 import { Menu } from 'src/app/_services/menu';
 import { MenuItem } from 'src/app/_services/menu-item';
 import { ExtendedMenuItem } from 'src/app/_services/menu-item3';
@@ -14,6 +15,7 @@ import { RestaurateurService } from 'src/app/_services/restaurateur.service';
 })
 export class RistorantiComponent {
   restaurateurs!: Restaurateur[];
+  @Output() cartUpdated = new EventEmitter<number>();
 
   eventBusSub?: Subscription;
   menuItems!: any[];
@@ -23,7 +25,8 @@ export class RistorantiComponent {
 
   constructor(
     private restaurateurService: RestaurateurService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +75,7 @@ export class RistorantiComponent {
     }
 
     sessionStorage.setItem('cart', JSON.stringify(cart));
+    this.cartUpdated.emit(cart.length);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RestaurateurService } from 'src/app/_services/restaurateur.service';
 import { Restaurateur } from 'src/app/_services/restaurateur';
@@ -8,7 +8,7 @@ import { Restaurateur } from 'src/app/_services/restaurateur';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent{
 
   restaurateurs!: Restaurateur[];
   @Output() logoutEvent = new EventEmitter<void>();
@@ -17,7 +17,7 @@ export class HomeComponent {
 
   constructor(
     private restaurateurService: RestaurateurService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.restaurateurService.getAllRestaurateurs().subscribe(
@@ -30,3 +30,4 @@ export class HomeComponent {
     );
   }
 }
+

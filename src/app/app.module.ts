@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -19,7 +20,30 @@ import { RegisterRestaurateurComponent } from './components/register-restaurateu
 import { RistoratoreBoardComponent } from './components/ristoratore-board/ristoratore-board.component';
 import { RistorantiComponent } from './components/ristoranti/ristoranti.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { FooterComponent } from './components/footer/footer.component';
 
+const cookieConfig:NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'http://localhost:4200' // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+  },
+  position: 'bottom-right',
+  palette: {
+    popup: {
+      background: '#8411e8',
+      text: '#000000',
+      link: '#ffffff'
+    },
+    button: {
+      background: '#ffffff',
+      text: '#000000',
+      border: 'transparent'
+    }
+  },
+  theme: 'classic',
+  type: 'info'
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +54,8 @@ import { ChartComponent } from './components/chart/chart.component';
     RegisterRestaurateurComponent,
     RistoratoreBoardComponent,
     RistorantiComponent,
-    ChartComponent
+    ChartComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +64,10 @@ import { ChartComponent } from './components/chart/chart.component';
     HttpClientModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgcCookieConsentModule.forRoot(cookieConfig),
+    NgxPayPalModule,
+    NgxPaginationModule
   ],
   providers: [httpInterceptorProviders, {
     provide: RECAPTCHA_SETTINGS,

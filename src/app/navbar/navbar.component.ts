@@ -11,19 +11,23 @@ import { AuthService } from '../_services/auth.service';
 export class NavbarComponent implements OnInit {
   @Input() isLoggedIn!: boolean;
   @Input() username!: string;
-  showRistoratoreBoard = false;
+  cartItems: any;
+  cartLength = 0; // add this
 
-  constructor(private storageService: StorageService,
-    private authService: AuthService) { }
+  constructor
+  (
+    private storageService: StorageService,
+    private authService: AuthService
+    )
+    {
+      const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+      this.cartItems = cart;
+      this.cartLength = cart.length; // add this
+    }
 
   ngOnInit(): void {
     const user = this.storageService.getUser();
     this.username = user.username;
-
-    // Check if the user has the ROLE_RISTORATORE role
-  if (user.roles.includes('ROLE_RISTORATORE')) {
-    this.showRistoratoreBoard = true;
-  }
   }
 
  async logout(): Promise<void> {

@@ -1,51 +1,56 @@
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item" *ngFor="let restaurateur of restaurateurs">
+<div class="accordion mx-3 mt-2 shadow-lg" id="accordionExample">
+  <div class="accordion-item bg-light border-0" *ngFor="let restaurateur of restaurateurs">
     <h2 class="accordion-header">
       <div class="row">
-        <div class="col-3">
-          <h2>{{ restaurateur.username }}</h2>
+        <div class="col-12 ms-1 ps-md-5 text-uppercase">
+          <h2 class="username">{{ restaurateur.username }}</h2>
         </div>
-        <div class="col-3">
-          <h2>Email: <a href = "mailto: {{ restaurateur.email }}">{{ restaurateur.email }}</a></h2>
+        <div class="col-12 ps-md-5">
+          <ul class="list-unstyled">
+            <li class="d-md-none"><i class="bi bi-envelope pe-1"></i><a href="mailto:{{ restaurateur.email }}">{{ restaurateur.email }} </a></li>
+            <li class="d-md-none"><i class="bi bi-phone pe-1"></i> <a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></li>
+            <li class="d-md-none"><i class="bi bi-geo-alt pe-1"></i>{{ restaurateur.address }}</li>
+            <li class="d-md-none"><i class="bi bi-info-circle-fill"></i>N° P:IVA: {{ restaurateur.numeroPartitaIva }}</li>
+            <div class="row d-none d-md-flex">
+              <div class="col-6">
+                <li><i class="bi bi-envelope pe-1"></i><a href="mailto:{{ restaurateur.email }}">{{ restaurateur.email }} </a></li>
+                <li><i class="bi bi-phone pe-1"></i> <a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></li>
+              </div>
+              <div class="col-6">
+                <li><i class="bi bi-geo-alt pe-1"></i>{{ restaurateur.address }}</li>
+                <li><i class="bi bi-info-circle-fill"></i>N° P:IVA: {{ restaurateur.numeroPartitaIva }}</li>
+              </div>
+            </div>
+          </ul>
         </div>
-        <div class="col-3">
-          <h2>Numero di cellulare:<a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></h2>
-        </div>
-        <div class="col-3 d-flex justify-content-end">
-          <button class="btn collapsed" type="button" data-bs-toggle="collapse"
+        <div class="col-12 d-flex justify-content-md-end justify-content-center">
+          <button class="btn btn-secondary collapsed mx-1 my-1" type="button" data-bs-toggle="collapse"
             [attr.data-bs-target]="'#collapse-' + restaurateur.id"
             [attr.aria-controls]="'collapse-' + restaurateur.id">APRI</button>
         </div>
       </div>
-      <div class="row">
-        <div class="col-4">
-          <h2>{{ restaurateur.id }}</h2>
-        </div>
-        <div class="col-4">
-          <h2>Sede locale:{{ restaurateur.address }}</h2>
-        </div>
-        <div class="col-4">
-          <h2>N° P:IVA:{{ restaurateur.numeroPartitaIva }}</h2>
-        </div>
-      </div>
     </h2>
+
     <div [id]="'collapse-' + restaurateur.id" class="accordion-collapse collapse"
       [attr.data-bs-parent]="'#accordionExample'">
       <div class="accordion-body">
-        <ul>
+        <ul class="list-unstyled">
           <li *ngFor="let menu of restaurateur.menus">
             <div>
-              <h3>Menu: {{ menu.name }}</h3>
-              <button *ngIf="menu" class="btn btn-success" (click)="loadMenuItems(menu)">Apri menu</button>
-              <div class="card col- col-sm-6 col-md-12" *ngFor="let item of menuItems">
-                <div class="card-body">
-                  <h5 class="card-title">{{ item.name }}</h5>
-                  <ul>Ingredienti:
-                    <li *ngFor="let ingredient of item.ingredients">{{ ingredient }}</li>
-                  </ul>
-                  Prezzo: {{ item.price }}€
-                  <input type="number" [(ngModel)]="item.quantity" min="1" max="10">
-                  <button (click)="addToCart(item, item.quantity, restaurateur.id)">Add to Cart</button>
+              <h3>Menu: {{ menu.name }}</h3><button *ngIf="menu" class="btn btn-success"(click)="loadMenuItems(menu)">Visualizza menu</button>
+              <div class="row">
+                <div class="card col-lg-4 col-sm-6 col-md-12" *ngFor="let item of menuItems">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p>Ingredienti: {{ item.ingredients.join(', ') }}</p>
+                    Prezzo: {{ item.price }}€
+                    <div class="d-flex justify-content-start">
+                      <p class="mt-2">Quantità: </p><input type="number" [(ngModel)]="item.quantity" min="1" max="10">
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-success px-5" (click)="addToCart(item, item.quantity, restaurateur.id)"><i class="bi bi-cart"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
