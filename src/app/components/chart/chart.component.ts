@@ -10,7 +10,8 @@ import { StorageService } from 'src/app/_services/storage.service';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  @Input() isLoggedIn!: boolean;
+  //@Input() isLoggedIn!: boolean;
+  isLoggedIn = false;
   cartItems$: Observable<any[]> | undefined;
   cartItems: any[] = [];
   orderProcessing = false;
@@ -28,6 +29,9 @@ export class ChartComponent implements OnInit {
   ngOnInit(): void {
     this.cartItems$ = this.storageService.getCart();
     this.initConfig();
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
   }
 
   getTotal(cartItems: any[]): number {

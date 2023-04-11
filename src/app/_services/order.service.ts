@@ -19,5 +19,13 @@ export class OrderService {
     return this.http.get<any>(`${this.baseUrl}/restaurateur/${id}`, {headers})
       .pipe(map(response => response.content));
   }
+  approveOrder(orderId: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
+    return this.http.put<any>(`${this.baseUrl}/${orderId}/approve`, null, { headers });
+  }
+  completeOrder(orderId: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
+    return this.http.put<any>(`${this.baseUrl}/${orderId}/complete`, null, { headers });
+  }
 
 }

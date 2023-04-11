@@ -17,14 +17,12 @@ export class AppComponent {
   showAdminBoard = false;
   showRestaurateurBoard = false;
   username?: string;
-  restaurateurs!: Restaurateur[];
   @Output() logoutEvent = new EventEmitter<void>();
   eventBusSub?: Subscription;
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private eventBusService: EventBusService,
-    private restaurateurService: RestaurateurService
+    private eventBusService: EventBusService
   ) { }
   ngOnInit(): void {
     const token = this.storageService.getToken();
@@ -32,8 +30,6 @@ export class AppComponent {
       this.authService.isLoggedIn.next(true);
       const user = this.storageService.getUser();
       this.roles = user.roles;
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showRestaurateurBoard = this.roles.includes('ROLE_RISTORATORE');
       this.username = user.username;
     }
 
@@ -44,15 +40,6 @@ export class AppComponent {
     this.eventBusService.on('logout', () => {
       this.logout();
     });
-
-    this.restaurateurService.getAllRestaurateurs().subscribe(
-      restaurateurs => {
-        this.restaurateurs = restaurateurs;
-      },
-      error => {
-        console.log(error);
-      }
-    );
     let consentStatus = localStorage.getItem('cookie-consent');
     if (consentStatus === null) {
       // Se il valore non è stato ancora impostato, salva la scelta dell'utente

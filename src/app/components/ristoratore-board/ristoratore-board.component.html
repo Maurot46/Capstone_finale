@@ -191,13 +191,13 @@
                 <td>{{ order.totalPrice }}€</td>
                 <td>{{ order.creationDateTime}}</td>
                 <td class="azioni">
-                  <a href="#" class="text-success" title="Delete" data-toggle="tooltip"><i
-                      class="bi bi-check-circle-fill"></i></a>
-                  <a href="#" class="text-secondary" title="Delete" data-toggle="tooltip"><i
-                      class="bi bi-box-seam-fill"></i></a>
-                  <a href="#" class="text-warning" title="Delete" data-toggle="tooltip"><i
+                  <a class="text-success" title="approva" data-toggle="tooltip"><i
+                      class="bi bi-check-circle-fill" (click)="approveOrder(order.id)"></i></a>
+                  <a class="text-secondary" title="spedisci" data-toggle="tooltip"><i
+                      class="bi bi-box-seam-fill"(click)="completeOrder(order.id)"></i></a>
+                  <a class="text-warning" title="rifiuta" data-toggle="tooltip"><i
                       class="bi bi-x-circle-fill"></i></a>
-                  <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash3-fill"></i></a>
+                  <a  class="delete" title="Delete" data-toggle="tooltip"><i class="bi bi-trash3-fill"></i></a>
                 </td>
               </tr>
             </tbody>

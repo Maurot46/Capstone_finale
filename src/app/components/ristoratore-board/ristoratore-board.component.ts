@@ -25,6 +25,7 @@ export class RistoratoreBoardComponent implements OnInit{
   ingredientsString: string = '';
   orders!: any[];
   p: number = 1;
+  orderId!: number;
   constructor(
     private menuService: MenuService,
     private formBuilder: FormBuilder,
@@ -43,6 +44,9 @@ export class RistoratoreBoardComponent implements OnInit{
     const userId = JSON.parse(sessionStorage.getItem('auth-user')!).id;
     this.getMenusByRestaurateurId(userId);
     this.getOrdersByRestaurateurId(userId);
+  }
+  reloadPage(){
+    window.location.reload();
   }
 
   getMenusByRestaurateurId(id: number) {
@@ -168,6 +172,18 @@ export class RistoratoreBoardComponent implements OnInit{
   editMenuItem(item: MenuItem2): void {
     this.ingredientsString = item.ingredients.join(', ');
     item.editing = true;
+  }
+  approveOrder(orderId: number): void {
+    this.orderService.approveOrder(orderId).subscribe((response) => {
+      console.log(response);
+      this.reloadPage();
+    });
+  }
+  completeOrder(orderId: number): void {
+    this.orderService.completeOrder(orderId).subscribe((response) => {
+      console.log(response);
+      this.reloadPage();
+    });
   }
 }
 
