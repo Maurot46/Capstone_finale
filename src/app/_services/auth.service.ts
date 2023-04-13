@@ -18,6 +18,9 @@ export class AuthService {
   get isLoggedIn() {
     return this.loggedIn;
   }
+  get isLoggedIn2() {
+    return this.loggedIn.getValue();
+  }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(

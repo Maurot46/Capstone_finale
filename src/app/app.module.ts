@@ -23,6 +23,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { FooterComponent } from './components/footer/footer.component';
+import { GuardGuard } from './components/guard.guard';
 
 const cookieConfig:NgcCookieConsentConfig = {
   cookie: {
@@ -74,7 +75,7 @@ const cookieConfig:NgcCookieConsentConfig = {
     useValue: {
       siteKey: environment.recaptcha.siteKey,
     } as RecaptchaSettings,
-  }],
+  }, GuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

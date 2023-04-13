@@ -7,12 +7,13 @@ import { RistorantiComponent } from './components/ristoranti/ristoranti.componen
 import { RistoratoreBoardComponent } from './components/ristoratore-board/ristoratore-board.component';
 import { LoginComponent } from './login/login.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { GuardGuard } from './components/guard.guard';
 const routes: Routes = [
   { path:'home', component:HomeComponent},
   { path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'registerRestaurateur', component: RegisterRestaurateurComponent},
-  {path: 'ristoratore-board', component: RistoratoreBoardComponent},
+  {path: 'ristoratore-board', component: RistoratoreBoardComponent, canActivate: [GuardGuard]},
   {path: 'ristoranti', component: RistorantiComponent},
   {path: 'chart', component: ChartComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'}
