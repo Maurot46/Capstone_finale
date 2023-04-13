@@ -1,14 +1,34 @@
 a {
   text-decoration: none;
-  color: rgb(213, 3, 213);
+  color: white;
 }
 a.my-link {
   text-decoration: none;
   color: purple;
 }
 .username {
-  font-size: 24px; /* example font size */
+  font-size: 35px; /* example font size */
   font-family: Arial, sans-serif; /* example font family */
   font-weight: bold; /* example font weight */
   /* any other font styles you want to add */
+}
+.accordion-item-1 {
+  background-image: url('/assets/low-poly-grid-haikei.svg');
+  border-radius: 20px;
+  box-shadow: 2 2 500px rgba(0, 0, 0, 0.25)!important;
+}
+
+.accordion-item-2 {
+  background-image: url('/assets/blob-scene-haikei.svg');
+  border-radius: 20px;
+}
+
+.accordion-item-3 {
+  background-image: url('/assets/layered-steps-haikei.svg');
+  border-radius: 20px;
+  background-position: center;
+}
+.accordion{
+  background-color: #f0f0f0;
+  border-radius: 20px;
 }

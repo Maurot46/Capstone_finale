@@ -7,7 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
   private cartItems = new BehaviorSubject<any>([]);
   currentCartItems = this.cartItems.asObservable();
-  constructor() { }
+  constructor() {
+    const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+    this.cartItems.next(cart);
+  }
   updateCartItems(cartItems: any): void {
     this.cartItems.next(cartItems);
   }

@@ -10,7 +10,6 @@ import { StorageService } from 'src/app/_services/storage.service';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  //@Input() isLoggedIn!: boolean;
   isLoggedIn = false;
   cartItems$: Observable<any[]> | undefined;
   cartItems: any[] = [];
@@ -20,6 +19,7 @@ export class ChartComponent implements OnInit {
   showSuccess!: boolean;
   showCancel!: boolean;
   showError!: boolean;
+  paymentComplete = false;
 
   constructor(private storageService: StorageService, private orderService: OrderService) {
     this.user = JSON.parse(sessionStorage.getItem('auth-user') || '{}');
@@ -35,7 +35,8 @@ export class ChartComponent implements OnInit {
   }
 
   getTotal(cartItems: any[]): number {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const total = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return total.toFixed(2);
   }
   updateCart(item: any) {
     const cart = JSON.parse(sessionStorage.getItem('cart') ?? '[]');
@@ -127,6 +128,7 @@ export class ChartComponent implements OnInit {
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         this.showSuccess = true;
+        this.paymentComplete = true;
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);

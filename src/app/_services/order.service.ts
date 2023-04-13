@@ -27,5 +27,9 @@ export class OrderService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
     return this.http.put<any>(`${this.baseUrl}/${orderId}/complete`, null, { headers });
   }
+  cancelledOrder(orderId: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(sessionStorage.getItem('auth-user')!).accessToken);
+    return this.http.put<any>(`${this.baseUrl}/${orderId}/cancelled`, null, { headers });
+  }
 
 }

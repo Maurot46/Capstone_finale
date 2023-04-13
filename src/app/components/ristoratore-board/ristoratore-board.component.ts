@@ -185,6 +185,12 @@ export class RistoratoreBoardComponent implements OnInit{
       this.reloadPage();
     });
   }
+  cancelledOrder(orderId: number): void {
+    this.orderService.cancelledOrder(orderId).subscribe((response) => {
+      console.log(response);
+      this.reloadPage();
+    });
+  }
 }
 
 

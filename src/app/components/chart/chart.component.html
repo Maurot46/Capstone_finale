@@ -88,7 +88,7 @@
             <h4 class="mb-3">Payment</h4>
             <ngx-paypal [config]="payPalConfig"></ngx-paypal>
             <hr class="my-4">
-            <button class="w-100 btn btn-primary btn-lg" type="submit" (click)="confirmOrder()">Continue to checkout</button>
+            <button class="w-100 btn btn-primary btn-lg" type="submit" (click)="confirmOrder()" [disabled]="!paymentComplete">Continue to checkout</button>
             <div id="paypal-button-container" class="paypal-button-container"></div>
           </div>
           <div *ngIf="!isLoggedIn" class="d-flex justify-content-center flex-column">

@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/_services/cart.service';
 import { Menu } from 'src/app/_services/menu';
 import { MenuItem } from 'src/app/_services/menu-item';
-import { ExtendedMenuItem } from 'src/app/_services/menu-item3';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Restaurateur } from 'src/app/_services/restaurateur';
 import { RestaurateurService } from 'src/app/_services/restaurateur.service';
@@ -15,6 +14,7 @@ import { RestaurateurService } from 'src/app/_services/restaurateur.service';
 })
 export class RistorantiComponent {
   restaurateurs!: Restaurateur[];
+  //emetto il cambiamento del numero del carrello
   @Output() cartUpdated = new EventEmitter<number>();
 
   eventBusSub?: Subscription;
@@ -75,6 +75,8 @@ export class RistorantiComponent {
     }
 
     sessionStorage.setItem('cart', JSON.stringify(cart));
+    //Numero del carrello update
+    this.cartService.updateCartItems(cart);
     this.cartUpdated.emit(cart.length);
   }
 
