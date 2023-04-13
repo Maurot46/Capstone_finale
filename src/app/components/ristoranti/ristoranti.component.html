@@ -6,22 +6,16 @@
     <h2 class="accordion-header">
       <div class="row">
         <div class="col-12 ms-1 ps-md-5 text-uppercase">
-          <h2 class="username text-white">{{ restaurateur.username }}</h2>
+          <h2 class="username text-white mt-5">{{ restaurateur.username }}</h2>
         </div>
         <div class="col-12 ps-md-5">
           <ul class="list-unstyled text-white">
-            <li class="d-md-none"><i class="bi bi-envelope pe-1"></i><a href="mailto:{{ restaurateur.email }}">{{ restaurateur.email }} </a></li>
-            <li class="d-md-none"><i class="bi bi-phone pe-1"></i> <a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></li>
-            <li class="d-md-none"><i class="bi bi-geo-alt pe-1"></i>{{ restaurateur.address }}</li>
-            <li class="d-md-none"><i class="bi bi-info-circle-fill"></i>N° P:IVA: {{ restaurateur.numeroPartitaIva }}</li>
             <div class="row d-none d-md-flex">
               <div class="col-6">
-                <li><i class="bi bi-envelope pe-1"></i><a href="mailto:{{ restaurateur.email }}">{{ restaurateur.email }} </a></li>
-                <li><i class="bi bi-phone pe-1"></i> <a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></li>
-              </div>
-              <div class="col-6 text-white">
-                <li><i class="bi bi-geo-alt pe-1 tex"></i>{{ restaurateur.address }}</li>
-                <li><i class="bi bi-info-circle-fill"></i>N° P:IVA: {{ restaurateur.numeroPartitaIva }}</li>
+                <li class="list ps-3 pt-3"><i class="bi bi-envelope-at-fill pe-1"></i><a href="mailto:{{ restaurateur.email }}">{{ restaurateur.email }} </a></li>
+                <li class="list pt-3 ps-3"><i class="bi bi-telephone-fill pe-1"></i> <a href="tel:{{ restaurateur.phoneNumber }}">{{ restaurateur.phoneNumber }}</a></li>
+                <li class="list pt-3 ps-3"><i class="bi bi-geo-alt-fill pe-1 tex"></i>{{ restaurateur.address }}</li>
+                <li class="list pt-3 ps-3"><i class="bi bi-info-circle-fill"></i> P. IVA: {{ restaurateur.numeroPartitaIva }}</li>
               </div>
             </div>
           </ul>
@@ -40,8 +34,8 @@
         <ul class="list-unstyled">
           <li *ngFor="let menu of restaurateur.menus">
             <div>
-              <h3 class="text-white">Menu: {{ menu.name }}</h3><button *ngIf="menu" class="btn btn-light rounded-pill"(click)="loadMenuItems(menu)">Visualizza menu</button>
-              <div class="row">
+              <h3 class="text-white ps-3">Menu: {{ menu.name }}</h3><button *ngIf="menu" class="btn btn-light rounded-pill ms-3"(click)="loadMenuItems(menu)">Visualizza menu</button>
+              <div class="row d-flex justify-content-center pt-5">
                 <div class="card col-lg-4 col-sm-6 col-md-12 mt-1" *ngFor="let item of menuItems">
                   <div class="card-body">
                     <h5 class="card-title">{{ item.name }}</h5>

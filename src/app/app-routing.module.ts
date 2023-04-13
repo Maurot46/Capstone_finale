@@ -10,7 +10,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { GuardGuard } from './components/guard.guard';
 const routes: Routes = [
   { path:'home', component:HomeComponent},
-  { path: 'login', component: LoginComponent },
+  {path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'registerRestaurateur', component: RegisterRestaurateurComponent},
   {path: 'ristoratore-board', component: RistoratoreBoardComponent, canActivate: [GuardGuard]},

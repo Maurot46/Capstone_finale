@@ -1,18 +1,8 @@
-<h2 class="d-flex justify-content-center pt-2">DASHBOARD</h2>
+<h2 class="d-flex display-4 py-5 mt fw-bolder justify-content-center">DASHBOARD</h2>
 <!--AGGIUNGI MENU-->
 <div class="row">
   <div class="col-12 col-md-6 col-lg-3 pb-3">
     <section class="ps-5">
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title d-flex justify-content-center">AGGIUNGI MENU</h5>
-          <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formAddMenu">
-              Aggiungi Menu <i class="bi bi-plus-circle"></i>
-            </button>
-          </div>
-        </div>
-      </div>
       <div class="modal fade" id="formAddMenu" tabindex="-1" aria-labelledby="formAddMenuLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -53,24 +43,33 @@
       </div>
     </section>
   </div>
-  <div class="col-12 col-md-6 col-lg-3 pb-3">
+  <div class="col-12 pb-3">
     <section>
       <!--LISTA MENU-->
-      <div class="container ps-5">
-        <div class="card" style="width: 18rem;">
+      <div class="container px-4">
+        <div class="card shadow-lg">
           <div class="card-body">
-            <h5 class="card-title d-flex justify-content-center">GESTISCI MENU</h5>
+            <h5 class="card-title d-flex h1 justify-content-center">GESTISCI MENU</h5>
           </div>
-          <ul>
-            <li *ngFor="let menu of menus">Nome:{{menu.id}} {{ menu.name }} | Categoria: {{ menu.tipologia }}
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formViewMenu"
-                (click)="menuItemSelected(menu)">V
-              </button>
-              <a class="btn btn-danger" (click)="deleteMenu(menu)">C</a>
-              <button *ngIf="menu" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formViewMenuItems"
-                (click)="loadMenuItems(menu)">M </button>
+            <li class="list-unstyled mb-4 text-center" *ngFor="let menu of menus">
+              <div class="h4">
+                <p>Nome: {{ menu.name }}</p>
+                <p>Categoria: {{ menu.tipologia }}</p>
+              </div>
+              <div class="text-center action pt-3">
+                <button class="btn btn-primary px-4 py-2 rounded-pill me-3" data-bs-toggle="modal" data-bs-target="#formViewMenu"
+                  (click)="menuItemSelected(menu)"><i class="bi bi-eye-fill"></i>
+                </button>
+                <a class="btn btn-danger me-3 px-4 py-2 rounded-pill" (click)="deleteMenu(menu)"><i class="bi bi-trash-fill"></i></a>
+                <button *ngIf="menu" class="btn btn-success px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#formViewMenuItems"
+                  (click)="loadMenuItems(menu)"><i class="bi bi-pencil-fill"></i> </button>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-warning px-5 py-2 mt-4 fw-bolder rounded-pill aggiungi" data-bs-toggle="modal" data-bs-target="#formAddMenu">
+                  Aggiungi Menu
+                </button>
+              </div>
             </li>
-          </ul>
         </div>
       </div>
       <!--MODAL VISUALIZZA-->
